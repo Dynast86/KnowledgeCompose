@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dynast.kin_eduwill.R
@@ -14,7 +15,12 @@ fun EventWidget(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        Text(text = stringResource(id = R.string.event), fontSize = 16.sp, modifier = Modifier.padding(horizontal = 8.dp))
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
+            text = stringResource(id = R.string.event),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W600
+        )
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             EventCardWidget(title = R.string.kar, image = R.drawable.img_house) {
 

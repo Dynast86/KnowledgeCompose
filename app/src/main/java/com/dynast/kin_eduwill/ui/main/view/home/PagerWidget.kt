@@ -1,15 +1,23 @@
 package com.dynast.kin_eduwill.ui.main.view.home
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.TabPosition
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,8 +42,7 @@ private val pagerList = listOf(
 fun PagerWidget(
     modifier: Modifier = Modifier
 ) {
-    val startIndex = Int.MAX_VALUE / 2
-    val pagerState = rememberPagerState(initialPage = startIndex)
+    val pagerState = rememberPagerState(initialPage = 0)
 
     LaunchedEffect(pagerState) {
         // Collect from the pager state a snapshotFlow reading the currentPage
@@ -50,8 +57,7 @@ fun PagerWidget(
             times = Int.MAX_VALUE,
             action = { index ->
                 delay(timeMillis = 4000)
-                val page = (index - startIndex).floorMod(pagerList.size)
-                pagerState.animateScrollToPage(page = page)
+                pagerState.animateScrollToPage(page = index)
             }
         )
     })
@@ -63,7 +69,7 @@ fun PagerWidget(
             state = pagerState,
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) { index ->
-            val page = (index - startIndex).floorMod(pagerList.size)
+            val page = index.floorMod(pagerList.size)
             CardWidget(brush = pagerList[page].brash, onClick = {}) {
                 Column(modifier = Modifier
                     .fillMaxWidth()
@@ -123,14 +129,45 @@ fun Indicators(
             .wrapContentHeight()
             .padding(PaddingValues(bottom = 24.dp, end = 48.dp))
     ) {
-        HorizontalPagerIndicator(
-            pagerState = state,
-            indicatorWidth = 4.dp,
-            activeColor = Color.White,
-            inactiveColor = Color(0x33FFFFFF),
-            pageCount = pagerList.size
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            ) {
+            repeat(pagerList.size) {
+                if (state.currentPage.floorMod(pagerList.size) == it) {
+                    Box(modifier = Modifier
+                        .size(width = 8.dp, height = 4.dp)
+                        .background(color = Color(0xffFFFFFF), shape = CircleShape))
+                } else {
+                    Box(modifier = Modifier
+                        .size(width = 4.dp, height = 4.dp)
+                        .background(color = Color(0x33FFFFFF), shape = CircleShape))
+                }
+            }
+        }
     }
+}
+
+fun Modifier.tabIndicatorOffset(
+    currentTabPosition: TabPosition
+): Modifier = composed(
+    inspectorInfo = debugInspectorInfo {
+        name = "tabIndicatorOffset"
+        value = currentTabPosition
+    }
+) {
+    val currentTabWidth by animateDpAsState(
+        targetValue = currentTabPosition.width,
+        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
+    )
+    val indicatorOffset by animateDpAsState(
+        targetValue = currentTabPosition.left,
+        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
+    )
+    fillMaxWidth()
+        .wrapContentSize(Alignment.BottomStart)
+        .offset(x = indicatorOffset)
+        .width(currentTabWidth)
 }
 
 @Preview

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -17,8 +18,13 @@ fun TipWidget(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-        Text(text = stringResource(id = R.string.tip), fontSize = 16.sp, modifier = Modifier.padding(8.dp))
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Text(
+            modifier = Modifier.padding(8.dp),
+            text = stringResource(id = R.string.tip),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W600,
+        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             TipCardWidget(
                 title = R.string.kar, subTitle = "용어집",
                 image = R.drawable.img_book, color = Color(0xffB5623A)
@@ -32,7 +38,7 @@ fun TipWidget(
 
             }
         }
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             TipCardWidget(
                 title = R.string.kar, subTitle = "유튜브",
                 image = R.drawable.img_youtube_kar, color = Color(0xffB5623A)

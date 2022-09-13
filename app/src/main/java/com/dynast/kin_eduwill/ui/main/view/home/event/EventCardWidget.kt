@@ -36,7 +36,9 @@ fun RowScope.EventCardWidget(
     ) {
         when (type) {
             EventType.Flat -> Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
@@ -65,7 +67,7 @@ fun RowScope.EventCardWidget(
                 verticalArrangement = Arrangement.Center
             ) {
                 Image(painter = painterResource(id = image), contentDescription = null)
-                Text(text = stringResource(id = title), color = Color(0xff33333D), fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text(text = stringResource(id = title), color = Color(0xff33333D), fontSize = 12.sp, fontWeight = FontWeight.W600)
             }
         }
     }

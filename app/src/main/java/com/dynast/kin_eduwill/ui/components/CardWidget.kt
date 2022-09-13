@@ -29,10 +29,9 @@ fun CardWidget(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp)
+            .padding(6.dp)
             .coloredShadow(
                 color = Color(0x1A00057B),
-                borderRadius = 16.dp,
                 blur = 20.dp,
                 offsetY = 15.dp
             )

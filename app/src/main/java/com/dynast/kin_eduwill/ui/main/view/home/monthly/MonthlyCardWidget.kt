@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,11 @@ fun RowScope.MonthlyCardWidget(
             )
             Text(
                 modifier = Modifier.padding(top = 8.dp),
-                text = name, color = Color(0xff33333D), fontSize = 12.sp, textAlign = TextAlign.Center
+                text = name,
+                color = Color(0xff33333D),
+                fontSize = 12.sp,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.W600
             )
             Text(
                 modifier = Modifier.padding(top = 8.dp),

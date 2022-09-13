@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,40 +22,37 @@ import androidx.compose.ui.unit.sp
 import com.dynast.kin_eduwill.R
 import com.dynast.kin_eduwill.ui.main.view.home.items.ProcessItems
 import com.dynast.kin_eduwill.ui.theme.Kin_eduwillTheme
-import com.dynast.kin_eduwill.ui.theme.coloredShadow
 
 private val shape = RoundedCornerShape(topStart = 16.dp, topEnd = 32.dp, bottomStart = 16.dp, bottomEnd = 16.dp)
 
 @Composable
-fun RowScope.ProcessWidget(
+fun RowScope.TempProcessWidget(
     modifier: Modifier = Modifier,
     item: ProcessItems,
     onClick: ProcessItems.() -> Unit
 ) {
-
     Box(modifier = modifier
         .weight(1f)
-        .height(136.dp)
-        .padding(6.dp)
+        .clip(shape = RoundedCornerShape(16.dp))
         .clickable { item.onClick() }
-        .coloredShadow(
-            color = Color(0x1A00057B),
-            blur = 20.dp,
-            offsetY = 15.dp
-        )
-        .clip(shape = RoundedCornerShape(16.dp))) {
-        Box(
+        .padding(6.dp)) {
+        Surface(
+            elevation = 4.dp,
             modifier = Modifier
                 .padding(top = 24.dp)
-                .fillMaxSize()
-                .background(brush = item.brash, shape = shape)
-        )
-
+                .fillMaxWidth()
+                .matchParentSize(),
+            shape = shape,
+            color = Color.Transparent
+        ) {
+            Box(
+                modifier = modifier.background(brush = item.brash, shape = shape)
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, top = 4.dp),
-            verticalArrangement = Arrangement.SpaceAround
+                .padding(start = 4.dp, top = 4.dp), verticalArrangement = Arrangement.SpaceAround
         ) {
             Image(
                 painter = painterResource(id = item.image), contentDescription = stringResource(id = item.title),
@@ -84,6 +82,7 @@ fun RowScope.ProcessWidget(
                     contentScale = ContentScale.None
                 )
             }
+
         }
     }
 }
@@ -93,10 +92,10 @@ fun RowScope.ProcessWidget(
     widthDp = 480
 )
 @Composable
-fun ProcessWidgetPreview() {
+fun TempProcessWidgetPreview() {
     Kin_eduwillTheme {
         Row {
-            ProcessWidget(item = ProcessItems.Kar, onClick = {})
+            TempProcessWidget(item = ProcessItems.Kar, onClick = {})
         }
     }
 }
