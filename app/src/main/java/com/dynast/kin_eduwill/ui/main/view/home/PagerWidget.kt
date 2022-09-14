@@ -20,13 +20,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dynast.kin_eduwill.ui.components.CardWidget
 import com.dynast.kin_eduwill.ui.main.view.home.items.ProcessStyleItems
 import com.dynast.kin_eduwill.ui.theme.Kin_eduwillTheme
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 
 
@@ -71,9 +75,11 @@ fun PagerWidget(
         ) { index ->
             val page = index.floorMod(pagerList.size)
             CardWidget(brush = pagerList[page].brash, onClick = {}) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
                     Text(
                         text = pagerList[page].title, fontSize = 12.sp, lineHeight = 18.sp,
                         color = if (pagerList[page] == ProcessStyleItems.Default) {
@@ -84,6 +90,8 @@ fun PagerWidget(
                     )
                     Text(
                         text = pagerList[page].content, fontSize = 18.sp, lineHeight = 27.sp, fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         color = if (pagerList[page] == ProcessStyleItems.Default) {
                             Color.Black
                         } else {
@@ -132,16 +140,20 @@ fun Indicators(
         Row(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically,
-            ) {
+        ) {
             repeat(pagerList.size) {
                 if (state.currentPage.floorMod(pagerList.size) == it) {
-                    Box(modifier = Modifier
-                        .size(width = 8.dp, height = 4.dp)
-                        .background(color = Color(0xffFFFFFF), shape = CircleShape))
+                    Box(
+                        modifier = Modifier
+                            .size(width = 8.dp, height = 4.dp)
+                            .background(color = Color(0xffFFFFFF), shape = CircleShape)
+                    )
                 } else {
-                    Box(modifier = Modifier
-                        .size(width = 4.dp, height = 4.dp)
-                        .background(color = Color(0x33FFFFFF), shape = CircleShape))
+                    Box(
+                        modifier = Modifier
+                            .size(width = 4.dp, height = 4.dp)
+                            .background(color = Color(0x33FFFFFF), shape = CircleShape)
+                    )
                 }
             }
         }
